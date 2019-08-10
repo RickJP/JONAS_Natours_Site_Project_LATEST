@@ -14,6 +14,14 @@ const sendErrDev = (err, res) => {
   });
 };
 
+const handleDuplicateFieldsDB = err => {
+  console.log('####');
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+  
+  const msg = `Duplicate field value: ${value}, Please use another value!`;
+  return new AppError(msg, 400);
+};
+
 const sendErrProd = (err, res) => {
   // Operational, trusted error: send message to client
   if (err.isOperational) {
@@ -41,8 +49,12 @@ module.exports = (err, req, res, next ) => {
   if (process.env.NODE_ENV === 'development') {
     sendErrDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
-		let error = {...err};
+    let error = {...err};
+    
 		if (error.name === 'CastError') error = handleCastErrorDB(error);
+    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+    // if (error.name === 'ValidationError')
+    //   error = handleValidationErrorDB(error);
     sendErrProd(error, res);
   }
 };
