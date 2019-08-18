@@ -15,6 +15,8 @@ router.patch('/updateMyPassword', authController.protect, authController.updateP
 
 router.patch('/updateMe', authController.protect, userController.updateMe);
 
+router.delete('/deleteMe', authController.protect, userController.deleteMe);
+
 router.param('id', (req, res, next, val) => {
   console.log(`User id is ${val}`);
   next();
