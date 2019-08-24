@@ -53,7 +53,12 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false
   }
-});
+},
+{
+  toJSON: {vituals: true },
+  toObject: {virtuals: true}
+}
+);
 
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
