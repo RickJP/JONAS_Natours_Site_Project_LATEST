@@ -84,11 +84,14 @@ reviewSchema.post('save', function() {
   this.constructor.calcAvgRatings(this.tour);
 });
 
+
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
 // findByIdAndUpdate
 // findByIdAndDelete
 // reviewSchema.pre(/^findOneAnd/, async function(next) {
 //   this.r = await this.findOne();
-//   // console.log(this.r);
+//  console.log(this.r);
 //   next();
 // });
 
@@ -96,7 +99,6 @@ reviewSchema.post(/^findOneAnd/, async function(doc) {
   if (doc) {
     await doc.constructor.calcAvgRatings(doc.tour);
   }
-  
 });
 
 const Review = mongoose.model('Review', reviewSchema);
