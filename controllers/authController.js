@@ -21,6 +21,8 @@ const createAndSendToken = (user, statusCode, res) => {
     ),
     httpOnly: true
   };
+  // Only sends a cookie over a secure connection (HTTPS) Delete this line to allow login functionality
+  // over a standard HTTP line temporarily.
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
   res.cookie('jwt', token, cookieOptions);
 
