@@ -8733,7 +8733,7 @@ var _login = require("./login");
 
 // DOM elements
 var mapBox = document.getElementById('map');
-var loginForm = document.querySelector('.form');
+var loginForm = document.querySelector('.form--login');
 var logoutBtn = document.querySelector('.nav__el--logout'); // DELEGATION
 
 if (mapBox) {
