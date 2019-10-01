@@ -2,6 +2,7 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 
+
 // ROUTES
 const router = express.Router();
 
@@ -25,12 +26,12 @@ router.get(
   userController.getMe,
   userController.getUser
 );
-router.patch('/updateMe',  userController.updateMe);
+router.patch('/updateMe', userController.uploadUserPhoto ,userController.resizeUserPhoto, userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
 router.param('id', (req, res, next, val) => {
   console.log(`User id is ${val}`);
-  next();
+  next();         
 });
 
 // RESTRICT routes to admin ONLY
