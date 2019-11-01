@@ -7,7 +7,7 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.name.split(' ')[0];
     this.url = url;
-    this.from = `Rick D <${process.env.EMAIL_FROM}>`
+    this.from = `Rick D <${process.env.EMAIL_FROM}>`;
   }
 
   newTransport() {
@@ -27,9 +27,10 @@ module.exports = class Email {
   }
   async send(template, subject) {
     // Render HTML based on pug template
-    const html = pug.renderFile(`${__dirname}/../views/emails/${template}.pug`, 
-    {firstName: this.firstName, url: this.url,
-    subject});
+    const html = pug.renderFile(
+      `${__dirname}/../views/email/${template}.pug`,
+      { firstName: this.firstName, url: this.url, subject }
+    );
 
     // Define the email options
     const mailOptions = {
@@ -46,11 +47,6 @@ module.exports = class Email {
   }
 
   async sendWelcome() {
-    await this.send('welcome', 'Welcome to the Natours club!');
+    await this.send('welcome', 'Welcome to the Natours Club!');
   }
-}
-
-const sendEmail = async options => {
-
 };
-
