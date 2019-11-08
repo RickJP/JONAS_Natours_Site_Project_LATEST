@@ -1,11 +1,6 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Tour = require('./../models/tourModel');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const factory = require('./handlerFactory');
-const multer = require('multer');
-const sharp = require('sharp');
-const multerStorage = multer.memoryStorage();
 
 exports.getCheckoutSession = catchAsync(async(req, res, next) => {
   // Get currently booked tour
@@ -22,12 +17,13 @@ exports.getCheckoutSession = catchAsync(async(req, res, next) => {
       {
         name: `${tour.name} Tour`,
         description: tour.summary,
-        images: [`https://natours.dev/img/tours/${tour.imageCover}`],
+        images: [`http://localhost:3000/img/tours/${tour.imageCover}`],
         amount: tour.price * 100,
         currency : 'usd',
         quantity: 1
       }
     ]
+    
 
   });
 
