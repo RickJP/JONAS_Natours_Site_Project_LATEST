@@ -19,4 +19,4 @@ export const bookTour = async tourId => {
       showAlert('error', err);
   }
  
-}
+};
