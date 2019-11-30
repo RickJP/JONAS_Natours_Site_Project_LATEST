@@ -13,8 +13,6 @@ const app = require('./app');
 
 const db = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PW);
 
-
-
 mongoose
   .connect(db, {
     useNewUrlParser: true,
@@ -35,6 +33,12 @@ process.on('unhandledRejection', err => {
   });
 });
 
+process.on('SIGTERM', () => {
+  console.log('📣SIGTERM RECEIVED. SHutting down gracefully');
+  server.close(() => {
+    console.log('💥Process terminated');
+  });
+});
 
 
 

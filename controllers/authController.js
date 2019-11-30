@@ -19,11 +19,11 @@ const createAndSendToken = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true
+    httpOnly: true,
+    secure: req.secure || req.headers('x-forwarded-proto') === 'https'
   };
   // Only sends a cookie over a secure connection (HTTPS) Delete this line to allow login functionality
   // over a standard HTTP line temporarily.
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
   res.cookie('jwt', token, cookieOptions);
 
   // remove password from output
